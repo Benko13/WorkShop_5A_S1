@@ -205,6 +205,11 @@ export function HeroBanner() {
   const [isPaused, setIsPaused] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  
+  // Touch/swipe handling
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
+  const minSwipeDistance = 50
 
   const SLIDE_DURATION = 6000 // 6 seconds per slide
   const TRANSITION_DURATION = 600
@@ -267,6 +272,35 @@ export function HeroBanner() {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [nextSlide, prevSlide])
 
+  // Touch/swipe handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null
+    touchStartX.current = e.targetTouches[0].clientX
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    
+    const distance = touchStartX.current - touchEndX.current
+    
+    if (Math.abs(distance) > minSwipeDistance) {
+      if (distance > 0) {
+        // Swipe left - next slide
+        nextSlide()
+      } else {
+        // Swipe right - previous slide
+        prevSlide()
+      }
+    }
+    
+    touchStartX.current = null
+    touchEndX.current = null
+  }
+
   const slide = slides[currentSlide]
 
   return (
@@ -274,6 +308,9 @@ export function HeroBanner() {
       className="relative w-full min-h-[85vh] lg:min-h-screen bg-[#111111] flex flex-col overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
       aria-roledescription="carousel"
       aria-label="Produits vedettes"
     >
@@ -465,8 +502,8 @@ export function HeroBanner() {
               onSelect={goToSlide}
             />
 
-            {/* Prev / Next arrows */}
-            <div className="flex items-center gap-2">
+            {/* Prev / Next arrows - Hidden on mobile, swipe is available */}
+            <div className="hidden md:flex items-center gap-2">
               <button
                 onClick={prevSlide}
                 disabled={isTransitioning}

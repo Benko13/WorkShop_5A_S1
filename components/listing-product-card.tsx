@@ -127,7 +127,7 @@ export function ListingProductCard({
         <div className="flex items-center justify-between gap-2">
           <span
             className={cn(
-              "font-bold text-neon-pink",
+              "font-bold text-neon-pink shrink-0",
               isFeatured ? "text-xl lg:text-2xl" : "text-base lg:text-lg"
             )}
           >
@@ -137,9 +137,9 @@ export function ListingProductCard({
           <button
             type="button"
             className={cn(
-              "bg-neon-pink text-primary-foreground font-bold uppercase tracking-wider border-2 border-border hover:bg-cyber-yellow hover:text-secondary-foreground transition-colors flex items-center gap-1.5",
+              "bg-neon-pink text-primary-foreground font-bold uppercase tracking-wider border-2 border-border hover:bg-cyber-yellow hover:text-secondary-foreground transition-colors flex items-center gap-1.5 shrink-0",
               isFeatured
-                ? "px-4 py-2 text-[11px]"
+                ? "px-3 sm:px-4 py-2 text-[11px]"
                 : "px-2 py-1.5 text-[10px]"
             )}
           >

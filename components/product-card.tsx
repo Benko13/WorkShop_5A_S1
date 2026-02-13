@@ -92,14 +92,14 @@ export function ProductCard({
         <h3 className="font-display text-sm text-off-white mb-3 flex-1 leading-snug">
           {name}
         </h3>
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-neon-pink">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-lg font-bold text-neon-pink shrink-0">
             <span className="text-cyber-yellow mr-0.5">&euro;</span>
             {price}
           </span>
           <button
             onClick={handleAddToCart}
-            className="bg-neon-pink text-primary-foreground px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border-2 border-border hover:bg-cyber-yellow hover:text-secondary-foreground transition-colors"
+            className="bg-neon-pink text-primary-foreground px-2 sm:px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border-2 border-border hover:bg-cyber-yellow hover:text-secondary-foreground transition-colors shrink-0 whitespace-nowrap"
           >
             AJOUTER
           </button>
