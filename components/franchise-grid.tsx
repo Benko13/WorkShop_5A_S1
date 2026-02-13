@@ -20,6 +20,20 @@ const franchiseMapping: Record<string, string> = {
 
 const franchises = [
   {
+    name: "DRAGON BALL",
+    jp: "\u30C9\u30E9\u30B4\u30F3\u30DC\u30FC\u30EB",
+    accent: "#FF00FF",
+    image: "/franchises/dragon-ball.jpg",
+    gridArea: "db",
+  },
+  {
+    name: "ONE PIECE",
+    jp: "\u30EF\u30F3\u30D4\u30FC\u30B9",
+    accent: "#F7EF00",
+    image: "/franchises/one-piece.jpg",
+    gridArea: "op",
+  },
+  {
     name: "DEMON SLAYER",
     jp: "\u9B3C\u6EC5\u306E\u5203",
     accent: "#FF00FF",
@@ -39,20 +53,6 @@ const franchises = [
     accent: "#FF00FF",
     image: "/franchises/naruto.jpg",
     gridArea: "nr",
-  },
-  {
-    name: "ONE PIECE",
-    jp: "\u30EF\u30F3\u30D4\u30FC\u30B9",
-    accent: "#F7EF00",
-    image: "/franchises/one-piece.jpg",
-    gridArea: "op",
-  },
-  {
-    name: "DRAGON BALL",
-    jp: "\u30C9\u30E9\u30B4\u30F3\u30DC\u30FC\u30EB",
-    accent: "#FF00FF",
-    image: "/franchises/dragon-ball.jpg",
-    gridArea: "db",
   },
   {
     name: "MY HERO ACADEMIA",
@@ -175,9 +175,9 @@ export function FranchiseGrid() {
       {/*
         Layout (4 cols x 3 rows):
         ┌────────┬────────┬────────┐
-        │   DS   │   JK   │   NR   │
+        │   DB   │   OP   │   DS   │
         │  2x2   ├────────┼────────┤
-        │        │   OP   │   DB   │
+        │        │   JK   │   NR   │
         ├────┬───┴────┬───┴────────┤
         │ MH │   AT   │     PK     │
         └────┴────────┴────────────┘
@@ -195,9 +195,9 @@ export function FranchiseGrid() {
           grid-template-columns: 1fr 1fr;
           grid-auto-rows: minmax(140px, 1fr);
           grid-template-areas:
+            "db op"
             "ds jk"
-            "nr op"
-            "db mh"
+            "nr mh"
             "at pk";
         }
 
@@ -207,8 +207,8 @@ export function FranchiseGrid() {
             grid-template-rows: 180px 180px 160px;
             gap: 4px;
             grid-template-areas:
-              "ds jk nr"
-              "ds op db"
+              "db op ds"
+              "db jk nr"
               "mh at pk";
           }
         }
