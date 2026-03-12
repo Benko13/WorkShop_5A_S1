@@ -533,21 +533,21 @@ function CollectionContent() {
     if (!video || !stream) return
     let w = video.videoWidth
     let h = video.videoHeight
+
+    // Si la vidéo ne fournit pas encore ses dimensions, on essaie de récupérer celles de la piste,
+    // sinon on tombe sur une valeur par défaut raisonnable pour éviter de ne rien capturer.
     if (!w || !h) {
       const track = stream.getVideoTracks()[0]
       const settings = track?.getSettings()
       if (settings?.width && settings?.height) {
         w = settings.width
         h = settings.height
+      } else {
+        w = video.clientWidth || 640
+        h = video.clientHeight || 480
       }
     }
-    if (!w || !h) {
-      if (video.readyState < 2) {
-        video.addEventListener("loadeddata", capturePhoto, { once: true })
-        return
-      }
-      return
-    }
+
     const canvas = document.createElement("canvas")
     canvas.width = w
     canvas.height = h
