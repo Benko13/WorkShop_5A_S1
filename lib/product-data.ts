@@ -19,6 +19,11 @@ export interface Product {
   dateAdded: string
 }
 
+/** URL d'image générée de façon déterministe pour chaque produit (une photo unique par id). */
+export function getProductImageUrl(productId: string): string {
+  return `https://picsum.photos/seed/${encodeURIComponent(productId)}/400/500`
+}
+
 
 export const allProducts: Product[] = [
   {

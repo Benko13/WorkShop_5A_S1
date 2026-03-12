@@ -4,20 +4,21 @@ import React from "react"
 
 import { SectionWrapper, JapaneseAccent } from "@/components/section-wrapper"
 import { ProductCard } from "@/components/product-card"
+import { getProductImageUrl } from "@/lib/product-data"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 
 const sampleProducts = [
-  { name: "Figurine Gojo Satoru Domaine Infini", price: "89,99", franchise: "Jujutsu Kaisen", badge: "NOUVEAU", badgeColor: "pink" as const, image: "/products/figurine-gojo.jpg" },
-  { name: "Booster Box One Piece OP-09", price: "124,99", franchise: "One Piece Card Game", badge: "NOUVEAU", badgeColor: "pink" as const, image: "/products/booster-onepiece.jpg" },
-  { name: "Nendoroid Tanjiro Kamado", price: "54,99", franchise: "Demon Slayer", image: "/products/figurine-tanjiro.jpg" },
-  { name: "Figurine Luffy Gear 5 S.H.Figuarts", price: "149,99", franchise: "One Piece", badge: "NOUVEAU", badgeColor: "pink" as const, image: "/products/figurine-luffy.jpg" },
-  { name: "Booster Pack Pokemon Ecarlate et Violet", price: "5,99", franchise: "Pokemon", image: "/products/booster-pokemon.jpg" },
-  { name: "Statuette Naruto Uzumaki Baryon Mode", price: "199,99", franchise: "Naruto", badge: "EDITION LIMITEE", badgeColor: "yellow" as const, image: "/products/figurine-naruto.jpg" },
-  { name: "Deck de Demarrage Yu-Gi-Oh! 2025", price: "12,99", franchise: "Yu-Gi-Oh!", image: "/products/card-yugioh.jpg" },
-  { name: "Figurine Deku Full Cowling Pop Up Parade", price: "39,99", franchise: "My Hero Academia", badge: "NOUVEAU", badgeColor: "pink" as const, image: "/products/figurine-deku.jpg" },
-  { name: "Carte Ultra Rare Charizard VMAX", price: "29,99", franchise: "Pokemon", badge: "ULTRA RARE", badgeColor: "yellow" as const, image: "/products/card-pokemon-rare.jpg" },
-  { name: "Figurine Zoro Enma Tsume Art", price: "349,99", franchise: "One Piece", badge: "NOUVEAU", badgeColor: "pink" as const, image: "/products/figurine-zoro.jpg" },
+  { id: "gojo", name: "Figurine Gojo Satoru Domaine Infini", price: "89,99", franchise: "Jujutsu Kaisen", badge: "NOUVEAU", badgeColor: "pink" as const },
+  { id: "op09", name: "Booster Box One Piece OP-09", price: "124,99", franchise: "One Piece Card Game", badge: "NOUVEAU", badgeColor: "pink" as const },
+  { id: "tanjiro", name: "Nendoroid Tanjiro Kamado", price: "54,99", franchise: "Demon Slayer" },
+  { id: "luffy", name: "Figurine Luffy Gear 5 S.H.Figuarts", price: "149,99", franchise: "One Piece", badge: "NOUVEAU", badgeColor: "pink" as const },
+  { id: "pokemon-pack", name: "Booster Pack Pokemon Ecarlate et Violet", price: "5,99", franchise: "Pokemon" },
+  { id: "naruto", name: "Statuette Naruto Uzumaki Baryon Mode", price: "199,99", franchise: "Naruto", badge: "EDITION LIMITEE", badgeColor: "yellow" as const },
+  { id: "yugioh", name: "Deck de Demarrage Yu-Gi-Oh! 2025", price: "12,99", franchise: "Yu-Gi-Oh!" },
+  { id: "deku", name: "Figurine Deku Full Cowling Pop Up Parade", price: "39,99", franchise: "My Hero Academia", badge: "NOUVEAU", badgeColor: "pink" as const },
+  { id: "charizard", name: "Carte Ultra Rare Charizard VMAX", price: "29,99", franchise: "Pokemon", badge: "ULTRA RARE", badgeColor: "yellow" as const },
+  { id: "zoro", name: "Figurine Zoro Enma Tsume Art", price: "349,99", franchise: "One Piece", badge: "NOUVEAU", badgeColor: "pink" as const },
 ]
 
 export function NewArrivals() {
@@ -150,7 +151,7 @@ export function NewArrivals() {
               key={`${product.name}-${index}`} 
               className="snap-start shrink-0 w-[280px] lg:w-[300px] first:ml-0 last:mr-0"
             >
-              <ProductCard {...product} />
+              <ProductCard {...product} image={getProductImageUrl(product.id)} />
             </div>
           ))}
         </div>

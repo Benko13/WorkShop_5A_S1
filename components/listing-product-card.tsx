@@ -3,6 +3,7 @@
 import { Heart, Star, ShoppingCart } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Product } from "@/lib/product-data"
+import { getProductImageUrl } from "@/lib/product-data"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -56,7 +57,7 @@ export function ListingProductCard({
         )}
       >
         <Image
-          src={product.image || "/placeholder.svg"}
+          src={getProductImageUrl(product.id)}
           alt={product.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"

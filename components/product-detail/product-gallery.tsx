@@ -7,28 +7,14 @@ import Image from "next/image"
 import { RotateCcw, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Product } from "@/lib/product-data"
+import { getProductImageUrl } from "@/lib/product-data"
 
 interface ProductGalleryProps {
   product: Product
 }
 
-// Fonction pour générer les images de galerie à partir de l'image principale
 function generateProductImages(product: Product) {
-  const baseImage = product.image
-  const baseName = baseImage.replace("/products/", "").replace(".jpg", "")
-  
-  // Pour Gojo, utiliser les images spécifiques existantes
-  if (product.id === "fig-gojo-01" || product.id === "fig-gojo-02") {
-    return [
-      { src: "/products/gojo-figure-1.jpg", alt: `${product.name} - Vue de face` },
-      { src: "/products/gojo-figure-2.jpg", alt: `${product.name} - Vue de profil` },
-      { src: "/products/gojo-figure-3.jpg", alt: `${product.name} - Vue arrière` },
-      { src: "/products/gojo-figure-4.jpg", alt: `${product.name} - Détail du visage` },
-      { src: "/products/gojo-figure-5.jpg", alt: `${product.name} - Photo in-scale` },
-    ]
-  }
-  
-  // Pour les autres produits, utiliser l'image principale répétée (ou générer des variantes si disponibles)
+  const baseImage = getProductImageUrl(product.id)
   return [
     { src: baseImage, alt: `${product.name} - Vue principale` },
     { src: baseImage, alt: `${product.name} - Vue détaillée` },

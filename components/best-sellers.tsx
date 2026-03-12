@@ -1,15 +1,16 @@
 import { SectionWrapper, JapaneseAccent } from "@/components/section-wrapper"
 import { ProductCard } from "@/components/product-card"
+import { getProductImageUrl } from "@/lib/product-data"
 
 const bestSellers = [
-  { name: "Figurine Gojo Satoru Domaine Infini", price: "89,99", franchise: "Jujutsu Kaisen", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/figurine-gojo.jpg" },
-  { name: "Booster Box Pokemon Ecarlate et Violet", price: "189,99", franchise: "Pokemon", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/booster-pokemon.jpg" },
-  { name: "Figurine Luffy Gear 5 S.H.Figuarts", price: "149,99", franchise: "One Piece", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/figurine-luffy.jpg" },
-  { name: "Figurine Goku Ultra Instinct", price: "79,99", franchise: "Dragon Ball", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/figurine-goku.jpg" },
-  { name: "Nendoroid Tanjiro Kamado", price: "54,99", franchise: "Demon Slayer", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/figurine-tanjiro.jpg" },
-  { name: "Carte Ultra Rare Charizard VMAX", price: "29,99", franchise: "Pokemon", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/card-pokemon-rare.jpg" },
-  { name: "Figurine Deku Full Cowling Pop Up Parade", price: "39,99", franchise: "My Hero Academia", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/figurine-deku.jpg" },
-  { name: "Booster Box One Piece OP-09", price: "124,99", franchise: "One Piece Card Game", badge: "BEST SELLER", badgeColor: "pink" as const, image: "/products/booster-onepiece.jpg" },
+  { id: "gojo", name: "Figurine Gojo Satoru Domaine Infini", price: "89,99", franchise: "Jujutsu Kaisen", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "pokemon-booster", name: "Booster Box Pokemon Ecarlate et Violet", price: "189,99", franchise: "Pokemon", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "luffy", name: "Figurine Luffy Gear 5 S.H.Figuarts", price: "149,99", franchise: "One Piece", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "goku", name: "Figurine Goku Ultra Instinct", price: "79,99", franchise: "Dragon Ball", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "tanjiro", name: "Nendoroid Tanjiro Kamado", price: "54,99", franchise: "Demon Slayer", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "charizard", name: "Carte Ultra Rare Charizard VMAX", price: "29,99", franchise: "Pokemon", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "deku", name: "Figurine Deku Full Cowling Pop Up Parade", price: "39,99", franchise: "My Hero Academia", badge: "BEST SELLER", badgeColor: "pink" as const },
+  { id: "onepiece-op09", name: "Booster Box One Piece OP-09", price: "124,99", franchise: "One Piece Card Game", badge: "BEST SELLER", badgeColor: "pink" as const },
 ]
 
 export function BestSellers() {
@@ -25,7 +26,7 @@ export function BestSellers() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {bestSellers.map((product) => (
-          <ProductCard key={product.name} {...product} />
+          <ProductCard key={product.name} {...product} image={getProductImageUrl(product.id)} />
         ))}
       </div>
     </SectionWrapper>
