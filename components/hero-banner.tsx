@@ -24,7 +24,7 @@ const slides: Slide[] = [
     id: 1,
     image: "/hero-slide-1.jpg",
     tag: "NOUVELLE COLLECTION",
-    title: ["FIGURINES", "EXCLUSIVES"],
+    title: ["FIGURINES", "EXCLUSIVES TEST"],
     titleAccent: "pink",
     description:
       "Decouvrez nos figurines et statuettes en edition limitee. Qualite premium, details exceptionnels.",
