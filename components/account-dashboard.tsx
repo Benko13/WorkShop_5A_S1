@@ -460,11 +460,9 @@ function CollectionContent() {
       setCameraLoading(false)
       return
     }
-    const isMobile = typeof window !== "undefined" && /iPhone|iPad|Android/i.test(navigator.userAgent)
+    // Version ultra-compatibile : on laisse le navigateur choisir la meilleure caméra.
     const constraints: MediaStreamConstraints = {
-      video: isMobile
-        ? { facingMode: { ideal: "environment" } }
-        : { facingMode: { ideal: "user" } },
+      video: true,
       audio: false,
     }
     navigator.mediaDevices
@@ -479,13 +477,6 @@ function CollectionContent() {
 
           const onReady = () => {
             setCameraLoading(false)
-            // Si après chargement la vidéo ne renvoie toujours aucune dimension,
-            // on considère que le flux ne s'affiche pas correctement.
-            if (!video.videoWidth || !video.videoHeight) {
-              setCameraError(
-                "La caméra est activée mais aucune image n'est reçue. Essayez de changer de navigateur ou de recharger la page."
-              )
-            }
           }
 
           video.addEventListener("loadeddata", onReady, { once: true })
@@ -500,15 +491,6 @@ function CollectionContent() {
               )
             })
 
-          // Sécurité supplémentaire : si rien ne se passe au bout de 4s, on affiche un message.
-          setTimeout(() => {
-            if (video === videoRef.current && (!video.videoWidth || !video.videoHeight)) {
-              setCameraLoading(false)
-              setCameraError(
-                "La caméra semble active mais l'image reste noire. Essayez un autre navigateur ou un autre appareil."
-              )
-            }
-          }, 4000)
         } else {
           setCameraLoading(false)
         }
