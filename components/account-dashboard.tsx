@@ -460,10 +460,12 @@ function CollectionContent() {
       setCameraLoading(false)
       return
     }
+    const isMobile = typeof window !== "undefined" && /iPhone|iPad|Android/i.test(navigator.userAgent)
     const constraints: MediaStreamConstraints = {
-      video: typeof window !== "undefined" && /iPhone|iPad|Android/i.test(navigator.userAgent)
-        ? { facingMode: "environment" }
-        : true,
+      video: isMobile
+        ? { facingMode: { ideal: "environment" } }
+        : { facingMode: { ideal: "user" } },
+      audio: false,
     }
     navigator.mediaDevices
       .getUserMedia(constraints)
@@ -472,11 +474,41 @@ function CollectionContent() {
         const video = videoRef.current
         if (video) {
           video.srcObject = stream
-          const onReady = () => setCameraLoading(false)
+          video.muted = true
+          video.playsInline = true
+
+          const onReady = () => {
+            setCameraLoading(false)
+            // Si après chargement la vidéo ne renvoie toujours aucune dimension,
+            // on considère que le flux ne s'affiche pas correctement.
+            if (!video.videoWidth || !video.videoHeight) {
+              setCameraError(
+                "La caméra est activée mais aucune image n'est reçue. Essayez de changer de navigateur ou de recharger la page."
+              )
+            }
+          }
+
           video.addEventListener("loadeddata", onReady, { once: true })
           video.addEventListener("error", onReady, { once: true })
-          video.play().catch(() => setCameraLoading(false))
-          setTimeout(onReady, 2000)
+          video
+            .play()
+            .then(onReady)
+            .catch(() => {
+              setCameraLoading(false)
+              setCameraError(
+                "Impossible de lancer l'aperçu vidéo. Vérifiez que l'accès à la caméra est autorisé dans le navigateur."
+              )
+            })
+
+          // Sécurité supplémentaire : si rien ne se passe au bout de 4s, on affiche un message.
+          setTimeout(() => {
+            if (video === videoRef.current && (!video.videoWidth || !video.videoHeight)) {
+              setCameraLoading(false)
+              setCameraError(
+                "La caméra semble active mais l'image reste noire. Essayez un autre navigateur ou un autre appareil."
+              )
+            }
+          }, 4000)
         } else {
           setCameraLoading(false)
         }
