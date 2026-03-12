@@ -552,9 +552,20 @@ function CollectionContent() {
     setCapturedImage(null)
   }
 
+  // Refonte "Prendre une photo" :
+  // on s'appuie désormais sur les entrées de fichiers natives (qui ouvrent l'appareil photo sur mobile)
+  // plutôt que sur un flux vidéo getUserMedia, beaucoup moins fiable selon les navigateurs.
   const openCameraForSlot = (slot: 0 | 1) => {
-    setCameraTargetSlot(slot)
-    setShowCameraModal(true)
+    if (editingCard) {
+      // Edition d'une carte existante : on cible l'input "édition"
+      editGalleryTargetRef.current = slot
+      editGalleryInputRef.current?.click()
+    } else {
+      // Création d'une nouvelle carte : on cible l'input "ajout"
+      addGalleryTargetRef.current = slot
+      setShowAddForm(true)
+      galleryInputRef.current?.click()
+    }
   }
 
   const handleCameraCaptureDone = () => {
@@ -756,7 +767,12 @@ function CollectionContent() {
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => setShowCameraModal(true)}
+            onClick={() => {
+              // Ouvre directement le formulaire + l'appareil photo / galerie via l'input fichier
+              addGalleryTargetRef.current = null
+              setShowAddForm(true)
+              galleryInputRef.current?.click()
+            }}
             className="flex items-center gap-2 px-4 py-2 bg-transparent text-cyber-yellow border-2 border-cyber-yellow hover:bg-cyber-yellow hover:text-secondary-foreground transition-all text-xs font-bold uppercase tracking-wider"
           >
             <Camera className="w-4 h-4" />
@@ -900,6 +916,7 @@ function CollectionContent() {
             ref={galleryInputRef}
             type="file"
             accept="image/*"
+            capture="environment"
             multiple
             className="hidden"
             onChange={handleAddGallerySelect}
@@ -1141,6 +1158,7 @@ function CollectionContent() {
             ref={editGalleryInputRef}
             type="file"
             accept="image/*"
+            capture="environment"
             multiple
             className="hidden"
             onChange={handleEditGallerySelect}
